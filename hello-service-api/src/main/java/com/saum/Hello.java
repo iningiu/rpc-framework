@@ -1,6 +1,8 @@
 package com.saum;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -10,6 +12,8 @@ import java.io.Serializable;
  * @Description:
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Hello implements Serializable {
     private String message;
     private String description;

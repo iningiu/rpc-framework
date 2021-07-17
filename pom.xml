@@ -12,6 +12,7 @@
         <module>rpc-framework-simple</module>
         <module>hello-service-api</module>
         <module>example-server</module>
+        <module>example-client</module>
     </modules>
 
     <properties>

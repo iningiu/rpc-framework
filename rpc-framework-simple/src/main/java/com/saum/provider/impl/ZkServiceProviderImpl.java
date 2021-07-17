@@ -21,12 +21,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Description: 暴露服务的服务提供方
  */
 @Slf4j
-public class ServiceProviderImpl implements ServiceProvider {
+public class ZkServiceProviderImpl implements ServiceProvider {
 
     private final Map<String,Object> serviceMap;
     private final ServiceRegistry serviceRegistry;
 
-    public ServiceProviderImpl() {
+    public ZkServiceProviderImpl() {
         this.serviceMap = new ConcurrentHashMap<>();
         this.serviceRegistry = new ZkServiceRegistryImpl();
     }
@@ -57,7 +57,7 @@ public class ServiceProviderImpl implements ServiceProvider {
             addService(rpcService);
 
             // 注册服务
-            String host = InetAddress.getLocalHost().getHostName();
+            String host = InetAddress.getLocalHost().getHostAddress();
             String rpcServiceName = rpcService.getClass().getInterfaces()[0].getCanonicalName();
             serviceRegistry.registryService(rpcServiceName, new InetSocketAddress(host, SocketRpcServer.PORT));
         } catch (UnknownHostException e) {

@@ -1,9 +1,7 @@
 package com.saum.transport.socket;
 
 import com.saum.provider.ServiceProvider;
-import com.saum.provider.impl.ServiceProviderImpl;
-import com.saum.registry.ServiceRegistry;
-import com.saum.registry.zk.ZkServiceRegistryImpl;
+import com.saum.provider.impl.ZkServiceProviderImpl;
 import com.saum.utils.ThreadPoolFactoryUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +24,7 @@ public class SocketRpcServer {
 
     public SocketRpcServer(){
         threadPool = ThreadPoolFactoryUtils.createCustomThreadPoolIfAbsent("socket-server-rpc-pool");
-        serviceProvider = new ServiceProviderImpl();
+        serviceProvider = new ZkServiceProviderImpl();
     }
 
     /**

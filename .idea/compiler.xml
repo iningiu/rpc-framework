@@ -9,6 +9,7 @@
         <module name="example-server" />
         <module name="hello-service-api" />
         <module name="rpc-framework-simple" />
+        <module name="example-client" />
       </profile>
     </annotationProcessing>
   </component>
