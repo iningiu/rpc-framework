@@ -1,4 +1,4 @@
-package com.saum;
+package com.saum.registry;
 
 import com.saum.registry.ServiceDiscovery;
 import com.saum.registry.ServiceRegistry;
