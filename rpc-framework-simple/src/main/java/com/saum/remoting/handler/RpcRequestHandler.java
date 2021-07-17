@@ -1,6 +1,7 @@
 package com.saum.remoting.handler;
 
 import com.saum.exception.RpcException;
+import com.saum.factory.SingletonFactory;
 import com.saum.provider.ServiceProvider;
 import com.saum.provider.impl.ZkServiceProviderImpl;
 import com.saum.remoting.dto.RpcRequest;
@@ -20,7 +21,7 @@ public class RpcRequestHandler {
     private final ServiceProvider serviceProvider;
 
     public RpcRequestHandler(){
-        serviceProvider = new ZkServiceProviderImpl();
+        serviceProvider = SingletonFactory.getInstance(ZkServiceProviderImpl.class);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.saum.transport.socket;
 
+import com.saum.factory.SingletonFactory;
 import com.saum.remoting.dto.RpcRequest;
 import com.saum.remoting.dto.RpcResponse;
 import com.saum.remoting.handler.RpcRequestHandler;
@@ -23,7 +24,7 @@ public class SocketRpcRequestHandleRunnable implements Runnable {
     public SocketRpcRequestHandleRunnable(Socket socket) {
         this.socket = socket;
         // 必须是单例的
-        this.rpcRequestHandler = new RpcRequestHandler();
+        this.rpcRequestHandler = SingletonFactory.getInstance(RpcRequestHandler.class);
     }
 
     @Override
