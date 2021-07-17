@@ -41,7 +41,6 @@ public class RpcClientProxy implements InvocationHandler {
 
         RpcResponse<Object> rpcResponse = null;
 
-        Object obj = socketRpcClient.sendRpcRequest(rpcRequest);
         rpcResponse = (RpcResponse<Object>) socketRpcClient.sendRpcRequest(rpcRequest);
         return rpcResponse.getData();
     }

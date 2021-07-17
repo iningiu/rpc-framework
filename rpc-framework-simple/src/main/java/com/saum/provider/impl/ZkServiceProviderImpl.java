@@ -23,11 +23,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class ZkServiceProviderImpl implements ServiceProvider {
 
-    private final Map<String,Object> serviceMap;
+    private final static Map<String,Object> serviceMap = new ConcurrentHashMap<>();
     private final ServiceRegistry serviceRegistry;
 
     public ZkServiceProviderImpl() {
-        this.serviceMap = new ConcurrentHashMap<>();
+//        this.serviceMap = new ConcurrentHashMap<>();
         this.serviceRegistry = new ZkServiceRegistryImpl();
     }
 
