@@ -1,5 +1,7 @@
 package com.saum.transport.socket;
 
+import com.saum.provider.ServiceProvider;
+import com.saum.provider.impl.ServiceProviderImpl;
 import com.saum.registry.ServiceRegistry;
 import com.saum.registry.zk.ZkServiceRegistryImpl;
 import com.saum.utils.ThreadPoolFactoryUtils;
@@ -20,25 +22,18 @@ public class SocketRpcServer {
     public static final int PORT = 9000;
 
     private final ExecutorService threadPool;
-    private final ServiceRegistry serviceRegistry = new ZkServiceRegistryImpl();
+    private final ServiceProvider serviceProvider;
 
     public SocketRpcServer(){
         threadPool = ThreadPoolFactoryUtils.createCustomThreadPoolIfAbsent("socket-server-rpc-pool");
+        serviceProvider = new ServiceProviderImpl();
     }
 
     /**
     * 注册服务
     */
-    public void registerService(Object service){
-        try {
-            String host = InetAddress.getLocalHost().getHostAddress();
-
-            String serviceName = service.getClass().getInterfaces()[0].getCanonicalName();
-            serviceRegistry.registryService(serviceName, new InetSocketAddress(host, PORT));
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-            log.error("获取HostAddress时出错！", e);
-        }
+    public void registerService(Object rpcService){
+        serviceProvider.publishService(rpcService);
     }
 
     public void start(){
