@@ -1,5 +1,7 @@
 package com.saum;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  * @Date 2021/7/17
  * @Description:
  */
+@Data
 public class Hello implements Serializable {
     private String message;
     private String description;
