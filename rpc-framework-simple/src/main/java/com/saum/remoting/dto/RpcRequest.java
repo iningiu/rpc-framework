@@ -1,10 +1,12 @@
 package com.saum.remoting.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
+@Builder
 public class RpcRequest implements Serializable {
     private String requestId;
     private String interfaceName;
