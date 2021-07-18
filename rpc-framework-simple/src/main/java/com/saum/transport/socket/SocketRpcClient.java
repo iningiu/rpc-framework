@@ -20,7 +20,7 @@ public class SocketRpcClient {
     private final ServiceDiscovery serviceDiscovery;
 
     public SocketRpcClient() {
-        this.serviceDiscovery = new ZkServiceDiscoveryImpl();
+        this.serviceDiscovery = new ZkServiceDiscoveryImpl(loadBalance);
     }
 
     /**

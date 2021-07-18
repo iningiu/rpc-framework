@@ -16,8 +16,24 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         // 获取客户端发送过来的消息
-        ByteBuf byteBuf = (ByteBuf) msg;
-        System.out.println("收到客户端"+ctx.channel().remoteAddress()+"发送的消息："+byteBuf.toString(CharsetUtil.UTF_8));
+//        ByteBuf byteBuf = (ByteBuf) msg;
+//        System.out.println("收到客户端"+ctx.channel().remoteAddress()+"发送的消息："+byteBuf.toString(CharsetUtil.UTF_8));
+
+        // 对于长时间的业务处理，可以交给taskQueue异步处理
+        ctx.channel().eventLoop().execute(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    // 长时间操作，不至于长时间的业务操作导致Handler阻塞
+                    Thread.sleep(1000);
+//                    System.out.println("长时间的业务处理");
+                    ByteBuf byteBuf = (ByteBuf) msg;
+                    System.out.println("收到客户端"+ctx.channel().remoteAddress()+"发送的消息："+byteBuf.toString(CharsetUtil.UTF_8));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override

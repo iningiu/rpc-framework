@@ -2,6 +2,7 @@ package com.saum.netty;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -30,8 +31,20 @@ public class NettyClient {
                         }
                     });
             System.out.println("客户端准备就绪...");
-            // 连接服务端
+            // 连接服务端，ChannelFuture提供操作完成时一种异步通知的方式，不会像Socket一样阻塞，类似观察者模式
             ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 6666).sync();
+            // 添加监听器
+            channelFuture.addListener(new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture channelFuture) throws Exception {
+                    // 判断是否操作成功
+                    if(channelFuture.isSuccess()){
+                        System.out.println("连接成功！");
+                    }else{
+                        System.out.println("连接失败！");
+                    }
+                }
+            });
             // 对通道关闭进行监听
             channelFuture.channel().closeFuture().sync();
         } finally {

@@ -1,7 +1,5 @@
 package com.saum.registry;
 
-import com.saum.registry.ServiceDiscovery;
-import com.saum.registry.ServiceRegistry;
 import com.saum.registry.zk.ZkServiceDiscoveryImpl;
 import com.saum.registry.zk.ZkServiceRegistryImpl;
 import com.saum.remoting.dto.RpcRequest;
@@ -27,7 +25,7 @@ public class ZkServiceRegistryTest {
                 .interfaceName(serviceName)
                 .requestId(UUID.randomUUID().toString())
                 .build();
-        ServiceDiscovery zkServiceDiscovery = new ZkServiceDiscoveryImpl();
+        ServiceDiscovery zkServiceDiscovery = new ZkServiceDiscoveryImpl(loadBalance);
         InetSocketAddress inetSocketAddress2 = zkServiceDiscovery.lookupService(rpcRequest);
 
         System.out.println(inetSocketAddress1);

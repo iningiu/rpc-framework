@@ -16,7 +16,11 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  */
 public class NettyServer {
     public static void main(String[] args) throws Exception {
-        //创建两个线程组 boosGroup、workerGroup
+        /*
+         * 创建两个线程组 boosGroup、workerGroup
+         * bossGroup 用于监听客户端连接，专门负责与客户端创建连接，并把连接注册到workerGroup的Selector中
+         * workerGroup用于处理每一个连接发生的读写事件
+         */
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
@@ -26,7 +30,7 @@ public class NettyServer {
             serverBootstrap.group(bossGroup, workerGroup)
                     // 设置服务端通道实现类型
                     .channel(NioServerSocketChannel.class)
-                    // 设置线程队列得到连接个数
+                    // 设置线程队列的连接个数
                     .option(ChannelOption.SO_BACKLOG, 128)
                     // 设置保持活动连接状态
                     .childOption(ChannelOption.SO_KEEPALIVE, true)

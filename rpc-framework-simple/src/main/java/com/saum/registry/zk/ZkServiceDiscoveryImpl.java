@@ -2,6 +2,8 @@ package com.saum.registry.zk;
 
 import com.saum.enums.RpcErrorMessageEnum;
 import com.saum.exception.RpcException;
+import com.saum.loadbalance.LoadBalance;
+import com.saum.loadbalance.impl.RandomLoadBalance;
 import com.saum.registry.ServiceDiscovery;
 import com.saum.registry.zk.util.CuratorUtils;
 import com.saum.remoting.dto.RpcRequest;
@@ -14,6 +16,12 @@ import java.util.Random;
 
 @Slf4j
 public class ZkServiceDiscoveryImpl implements ServiceDiscovery {
+    private final LoadBalance loadBalance;
+
+    public ZkServiceDiscoveryImpl() {
+        this.loadBalance = new RandomLoadBalance();
+    }
+
     @Override
     public InetSocketAddress lookupService(RpcRequest rpcRequest) {
         String rpcServiceName = rpcRequest.getRpcServiceName();
@@ -23,16 +31,9 @@ public class ZkServiceDiscoveryImpl implements ServiceDiscovery {
             throw new RpcException(RpcErrorMessageEnum.SERVICE_CAN_NOT_BE_FOUND, rpcServiceName);
         }
 
-        // 负载均衡：可能有多个服务，随机选择一个
-        String serviceUrl; // 格式：127.0.0.1:8000
-        if(serviceUrlList.size() == 1){
-            serviceUrl = serviceUrlList.get(0);
-        }else{
-            Random random = new Random();
-            serviceUrl = serviceUrlList.get(random.nextInt(serviceUrlList.size()));
-        }
-
-//        System.out.println(rpcServiceName + " " + serviceUrl);
+        // 负载均衡
+        String serviceUrl = loadBalance.selectServiceAddress(serviceUrlList, rpcRequest); // 格式：127.0.0.1:8000
+        log.info("成功找到服务地址：[{}]", serviceUrl);
 
         String[] socketAddressArray = serviceUrl.split(":");
         String host = socketAddressArray[0];

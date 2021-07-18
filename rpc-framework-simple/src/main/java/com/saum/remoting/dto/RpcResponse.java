@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * @Author saum
  * @Date 2021/7/17
- * @Description:
+ * @Description: rpc 响应实体类
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +21,9 @@ public class RpcResponse<T> implements Serializable {
     private String requestId;
     private Integer code;
     private String message;
+    /*
+     * 方法执行结果
+     */
     private T data;
 
     public static <T> RpcResponse<T> success(T data, String requestId){
