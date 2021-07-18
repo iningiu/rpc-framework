@@ -16,11 +16,11 @@ import java.util.concurrent.ExecutorService;
  * @Description:
  */
 @Slf4j
-public class HelloServer {
+public class SocketServer {
 
     private final ExecutorService threadPool;
 
-    public HelloServer() {
+    public SocketServer() {
         threadPool = ThreadPoolFactoryUtils.createCustomThreadPoolIfAbsent("");
     }
 
@@ -40,7 +40,7 @@ public class HelloServer {
     }
 
     public static void main(String[] args) {
-        HelloServer helloServer = new HelloServer();
+        SocketServer helloServer = new SocketServer();
         helloServer.start(6666);
     }
 }

@@ -5,9 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 /**
  * @Author saum
@@ -15,7 +13,7 @@ import java.net.UnknownHostException;
  * @Description:
  */
 @Slf4j
-public class HelloClient {
+public class SocketClient {
     public Object send(Message message, String host, int port){
         try(Socket socket = new Socket(host, port)){
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -31,8 +29,8 @@ public class HelloClient {
     }
 
     public static void main(String[] args) {
-        HelloClient helloClient = new HelloClient();
-        Message message = (Message) helloClient.send(new Message("hello, I'm client!"), "127.0.0.1", 6666);
+        SocketClient socketClient = new SocketClient();
+        Message message = (Message) socketClient.send(new Message("hello, I'm client!"), "127.0.0.1", 6666);
         System.out.println("客户端接收到的响应消息：" + message.getContent());
     }
 }
